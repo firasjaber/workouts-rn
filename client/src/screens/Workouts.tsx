@@ -1,14 +1,18 @@
 import React from 'react';
-import { Button, Icon, List, ListItem, Text } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
+import { List, ListItem } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { NavigationProp } from '@react-navigation/native';
 
 const data: Array<{ title: string; description: string }> = new Array(20).fill({
-  title: 'Title for Item',
-  description: 'Description for Item',
+  title: 'Super good workout',
+  description: 'Very good workout',
 });
 
-const Workouts = () => {
+interface WorkoutsProps {
+  navigation: NavigationProp<any, any>;
+}
+
+const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
   const renderItemAccessory = () => (
     <Ionicons name='chevron-forward-outline' size={25} />
   );
@@ -28,6 +32,7 @@ const Workouts = () => {
       description={`${item.description} ${index + 1}`}
       accessoryLeft={renderItemIcon}
       accessoryRight={renderItemAccessory}
+      onPress={() => navigation.navigate('Workout')}
     />
   );
   return <List data={data} renderItem={renderItem} />;

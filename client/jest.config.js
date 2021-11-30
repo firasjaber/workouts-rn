@@ -1,4 +1,2 @@
-module.exports = {
-  preset: 'react-native',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-};
+export const preset = 'react-native';
+export const moduleFileExtensions = ['ts', 'tsx', 'js', 'jsx', 'json', 'node'];

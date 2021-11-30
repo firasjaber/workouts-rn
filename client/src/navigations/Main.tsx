@@ -3,6 +3,7 @@ import Exercices from '../screens/Exercices';
 import Workouts from '../screens/Workouts';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import WorkoutsStack from './WorkoutsStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -10,6 +11,7 @@ const Main = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName = '';
 
@@ -26,7 +28,7 @@ const Main = () => {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name='Workouts' component={Workouts} />
+      <Tab.Screen name='Workouts' component={WorkoutsStack} />
       <Tab.Screen name='Exercices' component={Exercices} />
     </Tab.Navigator>
   );
