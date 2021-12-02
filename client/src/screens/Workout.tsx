@@ -1,12 +1,81 @@
+import { List, ListItem, StyleService } from '@ui-kitten/components';
 import React from 'react';
 import { View, Text } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const data: Array<{ title: string; description: string }> = new Array(20).fill({
+  title: 'Good exercice',
+  description: 'Chest, Triceps',
+});
+
+const renderItemAccessory = () => (
+  <Ionicons name='chevron-forward-outline' size={25} />
+);
+
+const renderItemIcon = () => <Ionicons name={'barbell-outline'} size={30} />;
+
+interface renderItemProps {
+  item: { title: string; description: string };
+  index: number;
+}
+
+const renderItem: React.FC<renderItemProps> = ({ item, index }) => (
+  <ListItem
+    title={`${item.title} ${index + 1}`}
+    description={`${item.description} ${index + 1}`}
+    accessoryLeft={renderItemIcon}
+    accessoryRight={renderItemAccessory}
+  />
+);
 
 const Workout = () => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Workout XX</Text>
+    <View>
+      <View style={styles.header}>
+        <Ionicons name={'clipboard-outline'} size={50} />
+        <View style={styles.heading}>
+          <Text style={styles.headingOne}>Intense Push Workout 1</Text>
+          <Text style={styles.headingTwo}>Chest, Triceps</Text>
+        </View>
+      </View>
+      <List
+        style={{ paddingLeft: 20, paddingRight: 20, backgroundColor: 'white' }}
+        data={data}
+        renderItem={renderItem}
+      />
     </View>
   );
 };
 
+const styles = StyleService.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    width: '100%',
+    height: 100,
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.5,
+  },
+  heading: {
+    marginLeft: 15,
+  },
+  headingOne: {
+    fontSize: 22,
+    fontWeight: '500',
+  },
+  headingTwo: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: 'tomato',
+  },
+  title: {
+    fontSize: 18,
+    color: 'tomato',
+    fontWeight: '600',
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: 'white',
+  },
+});
 export default Workout;
