@@ -1,13 +1,12 @@
 import React from 'react';
-import Exercices from '../screens/Exercices';
-import Workouts from '../screens/Workouts';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import WorkoutsStack from './WorkoutsStack';
+import WorkoutsStack from './Workouts.stack';
+import ExercicesStack from './Exercices.stack';
 
 const Tab = createBottomTabNavigator();
 
-const Main = () => {
+const MainNavigation = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -29,9 +28,9 @@ const Main = () => {
       })}
     >
       <Tab.Screen name='Workouts' component={WorkoutsStack} />
-      <Tab.Screen name='Exercices' component={Exercices} />
+      <Tab.Screen name='Exercices' component={ExercicesStack} />
     </Tab.Navigator>
   );
 };
 
-export default Main;
+export default MainNavigation;

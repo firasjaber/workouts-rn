@@ -9,7 +9,7 @@ const WorkoutsStack = () => {
   return (
     <Stack.Navigator
       initialRouteName='Workouts'
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         headerBackTitle: 'Back',
       })}
     >
