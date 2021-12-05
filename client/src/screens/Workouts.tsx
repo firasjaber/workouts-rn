@@ -30,6 +30,7 @@ const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
     <ListItem
       title={`${item.title} ${index + 1}`}
       description={`${item.description} ${index + 1}`}
+      style={{ paddingHorizontal: 20 }}
       accessoryLeft={renderItemIcon}
       accessoryRight={renderItemAccessory}
       onPress={() => navigation.navigate('Workout')}
