@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Workout {
+  id        Int        @id @default(autoincrement())
+  name      String
+  muscle    Muscle     @relation(fields: [muscleId], references: [id])
+  muscleId  Int
+  exercices Exercice[]
+}
+
+model Exercice {
+  id        Int       @id @default(autoincrement())
+  name      String
+  youtubeId String
+  muscle    Muscle    @relation(fields: [muscleId], references: [id])
+  muscleId  Int
+  Workout   Workout[]
+}
+
+model Muscle {
+  id        Int        @id @default(autoincrement())
+  name      String
+  Exercices Exercice[]
+  Workouts  Workout[]
+}
