@@ -13,8 +13,7 @@ datasource db {
 model Workout {
   id        Int        @id @default(autoincrement())
   name      String
-  muscle    Muscle     @relation(fields: [muscleId], references: [id])
-  muscleId  Int
+  muscles   Muscle[]
   exercices Exercice[]
 }
 
