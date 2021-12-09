@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/express-validator": "^3.0.0",
     "@types/jsonwebtoken": "^8.5.6",
     "@types/node": "^16.11.12",
     "nodemon": "^2.0.15",
@@ -23,6 +24,7 @@
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1"
   }
 }

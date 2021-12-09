@@ -9,9 +9,6 @@ export const registerUser = async (
   next: NextFunction
 ) => {
   let { email, firstName, lastName, password } = req.body;
-  if (!email || !firstName || !lastName || !password) {
-    return res.status(401).json({ success: false, message: 'invalid input' });
-  }
   try {
     const user = await prisma.user.findUnique({ where: { email: email } });
     if (user) {
