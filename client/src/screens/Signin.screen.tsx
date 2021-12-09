@@ -12,6 +12,7 @@ interface SigninProps {
 
 const Signin: React.FC<SigninProps> = ({ navigation }) => {
   const signIn = useAuthStore((state) => state.signIn);
+  const betaLogin = useAuthStore((state) => state.betaLogin);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [hiddenPassword, setHiddenPassword] = React.useState(true);
@@ -52,7 +53,8 @@ const Signin: React.FC<SigninProps> = ({ navigation }) => {
           onPress={() => {
             console.log(email);
             console.log(password);
-            signIn();
+            //signIn();
+            betaLogin();
           }}
         >
           Log in
