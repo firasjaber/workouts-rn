@@ -3,10 +3,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import WorkoutsStack from './Workouts.stack';
 import ExercicesStack from './Exercices.stack';
+import AuthStack from './Auth.stack';
+import useAuthStore from '../store/auth';
 
 const Tab = createBottomTabNavigator();
 
 const MainNavigation = () => {
+  const isAuth = useAuthStore((state) => state.isAuth);
+  if (!isAuth) {
+    return <AuthStack />;
+  }
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

@@ -28,7 +28,7 @@
     "react-native-web": "0.17.1",
     "react-native-webview": "^11.15.0",
     "react-native-youtube-iframe": "^2.2.1",
-    "zustand": "^3.6.6"
+    "zustand": "^3.6.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

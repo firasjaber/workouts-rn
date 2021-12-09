@@ -7126,7 +7126,7 @@
   "resolved" "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   "version" "0.1.0"
 
-"zustand@^3.6.6":
-  "integrity" "sha512-y4755cIzJHQFEHgTQ5cHrlHdmXMxm5N3DU05Q27yT6rK4lKs2336t5IsAz5q9/GRaoEz6o8SiCOPDhZd5BnneA=="
-  "resolved" "https://registry.npmjs.org/zustand/-/zustand-3.6.6.tgz"
-  "version" "3.6.6"
+"zustand@^3.6.7":
+  "integrity" "sha512-bYWKXMfoJwZyliFgidcQ3tJC/F2f2hHq1+lhTk8dVPX2k28i4VnpnKjBGNxAd2QNliV0m455Vm+gDL8LShrV3g=="
+  "resolved" "https://registry.npmjs.org/zustand/-/zustand-3.6.7.tgz"
+  "version" "3.6.7"
