@@ -1,7 +1,9 @@
 import { NavigationProp } from '@react-navigation/native';
+import { StyleService } from '@ui-kitten/components';
 import { Button, Input } from '@ui-kitten/components/ui';
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Keyboard, Text, TouchableWithoutFeedback, View } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import useAuthStore from '../store/auth';
 
 interface SigninProps {
@@ -10,26 +12,70 @@ interface SigninProps {
 
 const Signin: React.FC<SigninProps> = ({ navigation }) => {
   const signIn = useAuthStore((state) => state.signIn);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [hiddenPassword, setHiddenPassword] = React.useState(true);
+
+  const togglePassword = () => {
+    setHiddenPassword(!hiddenPassword);
+  };
+  const renderIcon = () => (
+    <TouchableWithoutFeedback onPress={togglePassword}>
+      <Ionicons name={hiddenPassword ? 'eye-off' : 'eye'} size={20} />
+    </TouchableWithoutFeedback>
+  );
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <Text>Sign in page</Text>
-      <Input placeholder='email' />
-      <Input placeholder='password' />
-      <Button
-        onPress={() => {
-          signIn();
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        Log in
-      </Button>
-    </View>
+        <Input
+          onChangeText={(e) => setEmail(e)}
+          size='large'
+          placeholder='Email address'
+          style={styles.input}
+        />
+        <Input
+          onChangeText={(e) => setPassword(e)}
+          size='large'
+          secureTextEntry={hiddenPassword}
+          accessoryRight={renderIcon}
+          placeholder='Password'
+          style={{ width: 300 }}
+        />
+        <Button
+          style={{ marginVertical: 15 }}
+          onPress={() => {
+            console.log(email);
+            console.log(password);
+            signIn();
+          }}
+        >
+          Log in
+        </Button>
+        <Text style={{ fontSize: 16 }}>
+          Dont have an account ?{' '}
+          <Text
+            style={{ color: 'blue', fontSize: 16 }}
+            onPress={() => navigation.navigate('Signup')}
+          >
+            Sign up now
+          </Text>
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleService.create({
+  input: {
+    width: 300,
+    marginBottom: 10,
+  },
+});
 
 export default Signin;
