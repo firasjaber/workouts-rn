@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import prisma from '../database/prisma';
 
-export const getAllWorkouts = async (req: Request, res: Response) => {
+export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const workouts = await prisma.workout.findMany();
-    res.status(200).json({ success: true, data: workouts });
+    const users = await prisma.user.findMany();
+    res.status(200).json({ success: true, data: users });
   } catch (error) {
     res.status(500).json({ success: false, message: 'internal error' });
   }
