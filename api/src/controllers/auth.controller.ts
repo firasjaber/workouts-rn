@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import prisma from '../database/prisma';
 import bcryptjs from 'bcryptjs';
-import signJWT from '../utils/jwt';
+import prisma from '../database/prisma';
 
 export const registerUser = async (
   req: Request,
@@ -9,9 +8,6 @@ export const registerUser = async (
   next: NextFunction
 ) => {
   let { email, firstName, lastName, password } = req.body;
-  if (!email || !firstName || !lastName || !password) {
-    return res.status(401).json({ success: false, message: 'invalid input' });
-  }
   try {
     const user = await prisma.user.findUnique({ where: { email: email } });
     if (user) {
@@ -50,11 +46,15 @@ export const registerUser = async (
     });
   }
 };
-
-export const loginUser = async (req: Request, res: Response) => {
-  let { email, password } = req.body;
+/*
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  let { username, password } = req.body;
   try {
-    const user = await prisma.user.findFirst({ where: { email: email } });
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(400).json({
         message: 'Invalid Credentials',
@@ -87,12 +87,4 @@ export const loginUser = async (req: Request, res: Response) => {
     });
   }
 };
-
-export const getAllUsers = async (req: Request, res: Response) => {
-  try {
-    const users = await prisma.user.findMany();
-    res.status(200).json({ success: true, data: users });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'internal error' });
-  }
-};
+*/
