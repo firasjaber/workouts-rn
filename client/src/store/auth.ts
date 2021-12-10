@@ -7,20 +7,38 @@ const config = {
   },
 };
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
 const useAuthStore = create((set: any) => ({
   isAuth: false,
+  error: '',
+  user: null,
+  loading: false,
+  authToken: null,
   signIn: () => set({ isAuth: true }),
   signOut: () => set({ isAuth: false }),
-  betaLogin: async () => {
+  betaLogin: async (body: LoginData) => {
     try {
-      const res = await axios.post(
+      set({ loading: true });
+      const res: any = await axios.post(
         'http://localhost:8000/api/users/login',
-        { email: 'jhon@doe', password: '1234567' },
+        body,
         config
       );
-      console.log(res);
+      set({
+        loading: false,
+        isAuth: true,
+        error: '',
+        authToken: res.data.token,
+        user: res.data.user,
+      });
+      console.log(res.data);
     } catch (error: any) {
-      console.log(error.response.data);
+      const msg = error.response.data.message;
+      set({ error: msg, loading: false });
     }
   },
 }));

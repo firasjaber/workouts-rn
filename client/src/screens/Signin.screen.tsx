@@ -11,7 +11,7 @@ interface SigninProps {
 }
 
 const Signin: React.FC<SigninProps> = ({ navigation }) => {
-  const signIn = useAuthStore((state) => state.signIn);
+  const error = useAuthStore((state) => state.error);
   const betaLogin = useAuthStore((state) => state.betaLogin);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,6 +38,7 @@ const Signin: React.FC<SigninProps> = ({ navigation }) => {
           onChangeText={(e) => setEmail(e)}
           size='large'
           placeholder='Email address'
+          status={error ? 'danger' : 'basic'}
           style={styles.input}
         />
         <Input
@@ -46,15 +47,16 @@ const Signin: React.FC<SigninProps> = ({ navigation }) => {
           secureTextEntry={hiddenPassword}
           accessoryRight={renderIcon}
           placeholder='Password'
-          style={{ width: 300 }}
+          status={error ? 'danger' : 'basic'}
+          style={styles.input}
         />
+        {error ? (
+          <Text style={{ color: 'red', fontSize: 16 }}>{error}</Text>
+        ) : null}
         <Button
           style={{ marginVertical: 15 }}
           onPress={() => {
-            console.log(email);
-            console.log(password);
-            //signIn();
-            betaLogin();
+            betaLogin({ email, password });
           }}
         >
           Log in
