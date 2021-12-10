@@ -12,14 +12,17 @@ interface LoginData {
   password: string;
 }
 
-const useAuthStore = create((set: any) => ({
+const initialState = {
   isAuth: false,
   error: '',
   user: null,
   loading: false,
   authToken: null,
+};
+const useAuthStore = create((set: any) => ({
+  ...initialState,
   signIn: () => set({ isAuth: true }),
-  signOut: () => set({ isAuth: false }),
+  signOut: () => set(initialState),
   betaLogin: async (body: LoginData) => {
     try {
       set({ loading: true });
