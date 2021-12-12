@@ -1,3 +1,4 @@
+import { NavigationProp } from '@react-navigation/native';
 import {
   Button,
   Input,
@@ -5,26 +6,42 @@ import {
   RadioGroup,
   StyleService,
 } from '@ui-kitten/components';
-import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useMutation, useQuery } from 'react-query';
-import { getMuscles } from '../api';
+import { addExercice, getMuscles } from '../api';
 
-const AddExercice = () => {
+interface AddExerciceBody {
+  name: string;
+  youtubeId: string;
+  muscleId: number;
+}
+
+interface AddExerciceProps {
+  navigation: NavigationProp<any, any>;
+}
+
+const AddExercice: React.FC<AddExerciceProps> = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [name, setName] = useState('');
   const [videoId, setVideoId] = useState('');
 
-  const handleAddExercice = () => {
-    console.log(name);
-    console.log(videoId);
-    console.log(selectedIndex);
-  };
-  const { isLoading, isError, data, error } = useQuery('todos', getMuscles);
-  console.log(data);
-  //const {isLoading,mutate} = useMutation(exercie => axios.post(''))
+  const addExerciceMutation = useMutation((exercice: AddExerciceBody) =>
+    addExercice(exercice)
+  );
 
+  const handleAddExercice = () => {
+    const body = {
+      name,
+      youtubeId: videoId,
+      muscleId: selectedIndex,
+    };
+    addExerciceMutation.mutate(body);
+  };
+  useEffect(() => {
+    if (addExerciceMutation.isSuccess) navigation.goBack();
+  }, [addExerciceMutation.isSuccess]);
+  const { data } = useQuery('todos', getMuscles);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{ padding: 20 }}>
@@ -56,6 +73,7 @@ const AddExercice = () => {
           style={{ marginTop: 20 }}
           status='warning'
           onPress={() => handleAddExercice()}
+          disabled={!name || !videoId}
         >
           Add Exercice
         </Button>
