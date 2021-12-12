@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationProp } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { List, ListItem } from '@ui-kitten/components/ui';
+import FloatingButton from '../ui/FloatingButton';
 
 const data: Array<{ title: string; description: string }> = new Array(20).fill({
   title: 'Super good exercice',
@@ -33,7 +34,12 @@ const ExercicesScreen: React.FC<WorkoutsProps> = ({ navigation }) => {
       onPress={() => navigation.navigate('Exercice')}
     />
   );
-  return <List data={data} renderItem={renderItem} />;
+  return (
+    <>
+      <List data={data} renderItem={renderItem} />
+      <FloatingButton navigation={navigation} navigateTo={'Add Exercice'} />
+    </>
+  );
 };
 
 export default ExercicesScreen;
