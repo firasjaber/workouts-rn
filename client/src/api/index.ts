@@ -11,6 +11,11 @@ export const getMuscles = async () => {
   return res.data.data;
 };
 
+export const getExercices = async () => {
+  const res = await axios.get('http://localhost:8000/api/exercices/all');
+  return res.data.data;
+};
+
 interface AddExerciceBody {
   name: string;
   youtubeId: string;

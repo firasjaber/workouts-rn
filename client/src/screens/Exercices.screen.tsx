@@ -3,6 +3,8 @@ import { NavigationProp } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { List, ListItem } from '@ui-kitten/components/ui';
 import FloatingButton from '../ui/FloatingButton';
+import { useQuery } from 'react-query';
+import { getExercices } from '../api';
 
 const data: Array<{ title: string; description: string }> = new Array(20).fill({
   title: 'Super good exercice',
@@ -13,6 +15,8 @@ interface WorkoutsProps {
 }
 
 const ExercicesScreen: React.FC<WorkoutsProps> = ({ navigation }) => {
+  const { data } = useQuery('exercices', getExercices);
+
   const renderItemAccessory = () => (
     <Ionicons name='chevron-forward-outline' size={25} />
   );
@@ -20,14 +24,13 @@ const ExercicesScreen: React.FC<WorkoutsProps> = ({ navigation }) => {
   const renderItemIcon = () => <Ionicons name={'barbell-outline'} size={30} />;
 
   interface renderItemProps {
-    item: { title: string; description: string };
+    item: { id: number; name: string; youtubeId: string; musclesId: number };
     index: number;
   }
 
   const renderItem: React.FC<renderItemProps> = ({ item, index }) => (
     <ListItem
-      title={`${item.title} ${index + 1}`}
-      description={`${item.description} ${index + 1}`}
+      title={`${item.name}`}
       accessoryLeft={renderItemIcon}
       style={{ paddingHorizontal: 20 }}
       accessoryRight={renderItemAccessory}

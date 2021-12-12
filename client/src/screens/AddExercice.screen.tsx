@@ -8,7 +8,7 @@ import {
 } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addExercice, getMuscles } from '../api';
 
 interface AddExerciceBody {
@@ -25,9 +25,15 @@ const AddExercice: React.FC<AddExerciceProps> = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [name, setName] = useState('');
   const [videoId, setVideoId] = useState('');
+  const queryClient = useQueryClient();
 
-  const addExerciceMutation = useMutation((exercice: AddExerciceBody) =>
-    addExercice(exercice)
+  const addExerciceMutation = useMutation(
+    (exercice: AddExerciceBody) => addExercice(exercice),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('exercices');
+      },
+    }
   );
 
   const handleAddExercice = () => {
@@ -41,7 +47,7 @@ const AddExercice: React.FC<AddExerciceProps> = ({ navigation }) => {
   useEffect(() => {
     if (addExerciceMutation.isSuccess) navigation.goBack();
   }, [addExerciceMutation.isSuccess]);
-  const { data } = useQuery('todos', getMuscles);
+  const { data } = useQuery('muscles', getMuscles);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{ padding: 20 }}>
