@@ -2,6 +2,7 @@ import { Button, Input, StyleService } from '@ui-kitten/components';
 import React, { useState } from 'react';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LiftTwoSvg from './../../assets/liftTwo.svg';
 
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
@@ -20,7 +21,19 @@ const Signup = () => {
   );
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingBottom: 100,
+        }}
+      >
+        <LiftTwoSvg
+          style={{ maxWidth: 300, maxHeight: 200, marginBottom: 50 }}
+          width='100%'
+          height='100%'
+        />
         <Input
           onChangeText={(e) => setFirstName(e)}
           placeholder='First name'

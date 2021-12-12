@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Keyboard, Text, TouchableWithoutFeedback, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useAuthStore from '../store/auth';
+import LiftOneSvg from './../../assets/liftOne.svg';
 
 interface SigninProps {
   navigation: NavigationProp<any, any>;
@@ -32,8 +33,14 @@ const Signin: React.FC<SigninProps> = ({ navigation }) => {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
+          paddingBottom: 150,
         }}
       >
+        <LiftOneSvg
+          style={{ maxWidth: 300, maxHeight: 200, marginBottom: 50 }}
+          width='100%'
+          height='100%'
+        />
         <Input
           onChangeText={(e) => setEmail(e)}
           size='large'
