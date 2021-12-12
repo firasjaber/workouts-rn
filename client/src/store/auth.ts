@@ -12,6 +12,13 @@ interface LoginData {
   password: string;
 }
 
+interface RegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 const initialState = {
   isAuth: false,
   error: '',
@@ -38,7 +45,32 @@ const useAuthStore = create((set: any) => ({
         authToken: res.data.token,
         user: res.data.user,
       });
-      console.log(res.data);
+    } catch (error: any) {
+      const msg = error.response.data.message;
+      set({ error: msg, loading: false });
+    }
+  },
+  register: async (body: RegisterData) => {
+    try {
+      set({ loading: true });
+      await axios.post(
+        'http://localhost:8000/api/users/register',
+        body,
+        config
+      );
+      const { email, password } = body;
+      const res: any = await axios.post(
+        'http://localhost:8000/api/users/login',
+        { email, password },
+        config
+      );
+      set({
+        loading: false,
+        isAuth: true,
+        error: '',
+        authToken: res.data.token,
+        user: res.data.user,
+      });
     } catch (error: any) {
       const msg = error.response.data.message;
       set({ error: msg, loading: false });

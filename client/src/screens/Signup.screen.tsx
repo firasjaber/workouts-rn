@@ -1,7 +1,8 @@
-import { Button, Input, StyleService } from '@ui-kitten/components';
+import { Button, Input, StyleService, Text } from '@ui-kitten/components';
 import React, { useState } from 'react';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import useAuthStore from '../store/auth';
 import LiftTwoSvg from './../../assets/liftTwo.svg';
 
 const Signup = () => {
@@ -10,6 +11,8 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [hiddenPassword, setHiddenPassword] = React.useState(true);
+  const error = useAuthStore((state) => state.error);
+  const register = useAuthStore((state) => state.register);
 
   const togglePassword = () => {
     setHiddenPassword(!hiddenPassword);
@@ -50,6 +53,7 @@ const Signup = () => {
           onChangeText={(e) => setEmail(e)}
           size='large'
           placeholder='Email address'
+          status={error ? 'danger' : 'basic'}
           style={styles.input}
         />
         <Input
@@ -58,15 +62,15 @@ const Signup = () => {
           accessoryRight={renderIcon}
           secureTextEntry={hiddenPassword}
           placeholder='Password'
-          style={{ width: 300 }}
+          style={styles.input}
         />
+        {error ? (
+          <Text style={{ color: 'red', fontSize: 16 }}>{error}</Text>
+        ) : null}
         <Button
           style={{ marginVertical: 15 }}
           onPress={() => {
-            console.log(firstName);
-            console.log(lastName);
-            console.log(email);
-            console.log(password);
+            register({ firstName, lastName, email, password });
           }}
         >
           Sign up
