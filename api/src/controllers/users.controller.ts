@@ -9,6 +9,8 @@ export const registerUser = async (
   next: NextFunction
 ) => {
   let { email, firstName, lastName, password } = req.body;
+  email = email.toLowerCase();
+  console.log(email);
   try {
     const user = await prisma.user.findUnique({ where: { email: email } });
     if (user) {
@@ -50,6 +52,7 @@ export const registerUser = async (
 
 export const loginUser = async (req: Request, res: Response) => {
   let { email, password } = req.body;
+  email = email.toLowerCase();
   try {
     const user = await prisma.user.findFirst({ where: { email: email } });
     if (!user) {

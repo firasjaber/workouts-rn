@@ -28,7 +28,6 @@ const initialState = {
 };
 const useAuthStore = create((set: any) => ({
   ...initialState,
-  signIn: () => set({ isAuth: true }),
   signOut: () => set(initialState),
   betaLogin: async (body: LoginData) => {
     try {
