@@ -2,22 +2,15 @@ import React from 'react';
 import { NavigationProp } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { List, ListItem } from '@ui-kitten/components/ui';
+import { useQuery } from 'react-query';
+import { getMuscles } from '../api';
 
-const data = [
-  'Chest',
-  'Back',
-  'Triceps',
-  'Biceps',
-  'Shoulders',
-  'Legs',
-  'Forearms',
-  'Core',
-];
 interface MusclesProps {
   navigation: NavigationProp<any, any>;
 }
 
 const MusclesScreen: React.FC<MusclesProps> = ({ navigation }) => {
+  const { data } = useQuery('muscles', getMuscles);
   const renderItemAccessory = () => (
     <Ionicons name='chevron-forward-outline' size={25} />
   );
@@ -25,13 +18,13 @@ const MusclesScreen: React.FC<MusclesProps> = ({ navigation }) => {
   const renderItemIcon = () => <Ionicons name={'ribbon-outline'} size={30} />;
 
   interface renderItemProps {
-    item: string;
+    item: { name: string; id: number };
     index: number;
   }
 
   const renderItem: React.FC<renderItemProps> = ({ item }) => (
     <ListItem
-      title={`${item}`}
+      title={`${item.name}`}
       accessoryLeft={renderItemIcon}
       style={{ paddingHorizontal: 20 }}
       accessoryRight={renderItemAccessory}
