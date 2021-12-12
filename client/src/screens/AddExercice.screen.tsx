@@ -7,6 +7,8 @@ import {
 } from '@ui-kitten/components';
 import React, { useState } from 'react';
 import { View, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { useQuery } from 'react-query';
+import { getMuscles } from '../api';
 
 const AddExercice = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -18,6 +20,9 @@ const AddExercice = () => {
     console.log(videoId);
     console.log(selectedIndex);
   };
+  const { isLoading, isError, data, error } = useQuery('todos', getMuscles);
+  console.log(data);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{ padding: 20 }}>
@@ -38,13 +43,12 @@ const AddExercice = () => {
           selectedIndex={selectedIndex}
           onChange={(index: number) => setSelectedIndex(index)}
         >
-          <Radio status='warning'>Chest</Radio>
-          <Radio status='warning'>Back</Radio>
-          <Radio status='warning'>Shoulders</Radio>
-          <Radio status='warning'>Biceps</Radio>
-          <Radio status='warning'>Triceps</Radio>
-          <Radio status='warning'>Legs</Radio>
-          <Radio status='warning'>Core</Radio>
+          {data &&
+            data.map((muscle: any) => (
+              <Radio key={muscle.id} status='warning'>
+                {muscle.name}
+              </Radio>
+            ))}
         </RadioGroup>
         <Button
           style={{ marginTop: 20 }}
