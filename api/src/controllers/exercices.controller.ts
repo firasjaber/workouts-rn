@@ -9,3 +9,17 @@ export const getAllExercices = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: 'internal error' });
   }
 };
+
+export const addExercice = async (req: Request, res: Response) => {
+  try {
+    await prisma.exercice.create({ data: req.body });
+    res
+      .status(201)
+      .json({ success: true, message: 'Exercice created succefully' });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+      error,
+    });
+  }
+};

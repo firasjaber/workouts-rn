@@ -23,7 +23,12 @@ export function createValidationFor(route: string) {
           .isLength({ min: 6 })
           .withMessage('Please enter a valid password ( min length is 6 ).'),
       ];
-
+    case 'addExercice':
+      return [
+        check('name').notEmpty(),
+        check('youtubeId').notEmpty(),
+        check('muscleId').notEmpty(),
+      ];
     default:
       return [];
   }

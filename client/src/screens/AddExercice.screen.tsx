@@ -5,9 +5,10 @@ import {
   RadioGroup,
   StyleService,
 } from '@ui-kitten/components';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { View, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { getMuscles } from '../api';
 
 const AddExercice = () => {
@@ -22,6 +23,7 @@ const AddExercice = () => {
   };
   const { isLoading, isError, data, error } = useQuery('todos', getMuscles);
   console.log(data);
+  //const {isLoading,mutate} = useMutation(exercie => axios.post(''))
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
