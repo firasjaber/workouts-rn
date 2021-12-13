@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   addExercice,
+  deleteExercice,
   getAllExercices,
 } from '../controllers/exercices.controller';
 import {
@@ -16,5 +17,6 @@ router.post(
   checkValidationResult,
   addExercice
 );
+router.delete('/:id', deleteExercice);
 
 export = router;

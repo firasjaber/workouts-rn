@@ -23,3 +23,26 @@ export const addExercice = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const deleteExercice = async (req: Request, res: Response) => {
+  try {
+    const exercice = await prisma.exercice.findUnique({
+      where: { id: parseInt(req.params.id) },
+    });
+    if (!exercice) {
+      return res.status(400).json({
+        success: false,
+        message: `Exercice with id = ${req.params.id} not found`,
+      });
+    }
+    await prisma.exercice.delete({ where: { id: parseInt(req.params.id) } });
+    return res
+      .status(201)
+      .json({ success: true, message: 'Exercice deleted succefully' });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+      error,
+    });
+  }
+};
