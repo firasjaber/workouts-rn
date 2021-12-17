@@ -1,4 +1,4 @@
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { List, ListItem, StyleService } from '@ui-kitten/components';
 import React, { useCallback, useState } from 'react';
 import { View, Text, Alert } from 'react-native';
@@ -7,11 +7,13 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 
 interface ExerciceProps {
   navigation: NavigationProp<any, any>;
+  route: any;
 }
 
-const ExerciceScreen: React.FC<ExerciceProps> = ({ navigation }) => {
+const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
   const [playing, setPlaying] = useState(false);
 
+  console.log(route.params.id);
   const onStateChange = useCallback((state) => {
     if (state === 'ended') {
       setPlaying(false);

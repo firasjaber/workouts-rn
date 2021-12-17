@@ -3,6 +3,7 @@ import {
   addExercice,
   deleteExercice,
   getAllExercices,
+  getExercice,
 } from '../controllers/exercices.controller';
 import {
   checkValidationResult,
@@ -11,6 +12,7 @@ import {
 const router = express.Router();
 
 router.get('/all', getAllExercices);
+router.get('/:id', getExercice);
 router.post(
   '/',
   createValidationFor('addExercice'),

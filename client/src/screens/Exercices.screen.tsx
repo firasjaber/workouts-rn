@@ -34,7 +34,7 @@ const ExercicesScreen: React.FC<WorkoutsProps> = ({ navigation }) => {
       accessoryLeft={renderItemIcon}
       style={{ paddingHorizontal: 20 }}
       accessoryRight={renderItemAccessory}
-      onPress={() => navigation.navigate('Exercice')}
+      onPress={() => navigation.navigate('Exercice', { id: item.id })}
     />
   );
   return (

@@ -46,3 +46,19 @@ export const deleteExercice = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getExercice = async (req: Request, res: Response) => {
+  try {
+    const exercice = await prisma.exercice.findUnique({
+      where: { id: parseInt(req.params.id) },
+      include: { Workout: true },
+    });
+    if (!exercice) {
+      return res.status(404).json({
+        success: false,
+        message: `Exercice with id = ${req.params.id} not found`,
+      });
+    }
+    return res.status(200).json({ status: 'success', data: exercice });
+  } catch (error) {}
+};
