@@ -62,8 +62,8 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
       <View style={styles.header}>
         <Ionicons name={'barbell-outline'} size={50} />
         <View style={styles.heading}>
-          <Text style={styles.headingOne}>{exerciceData.name}</Text>
-          <Text style={styles.headingTwo}>{exerciceData.muscleId}</Text>
+          <Text style={styles.headingOne}>{exerciceData?.name}</Text>
+          <Text style={styles.headingTwo}>{exerciceData?.muscle?.name}</Text>
         </View>
       </View>
 
@@ -73,7 +73,7 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
           <YoutubePlayer
             height={223}
             play={playing}
-            videoId={exerciceData.youtubeId}
+            videoId={exerciceData?.youtubeId}
             onChangeState={onStateChange}
           />
         </View>
