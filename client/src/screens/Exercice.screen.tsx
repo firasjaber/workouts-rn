@@ -4,6 +4,8 @@ import React, { useCallback, useState } from 'react';
 import { View, Text, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import { useQuery } from 'react-query';
+import { getExerice } from '../api';
 
 interface ExerciceProps {
   navigation: NavigationProp<any, any>;
@@ -14,6 +16,10 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
   const [playing, setPlaying] = useState(false);
 
   console.log(route.params.id);
+  const exerciceId = route.params.id;
+  const { data: exerciceData } = useQuery('exercice', () =>
+    getExerice(exerciceId)
+  );
   const onStateChange = useCallback((state) => {
     if (state === 'ended') {
       setPlaying(false);
@@ -56,8 +62,8 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
       <View style={styles.header}>
         <Ionicons name={'barbell-outline'} size={50} />
         <View style={styles.heading}>
-          <Text style={styles.headingOne}>Bar Bench Press</Text>
-          <Text style={styles.headingTwo}>Chest, Triceps</Text>
+          <Text style={styles.headingOne}>{exerciceData.name}</Text>
+          <Text style={styles.headingTwo}>{exerciceData.muscleId}</Text>
         </View>
       </View>
 
@@ -67,7 +73,7 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
           <YoutubePlayer
             height={223}
             play={playing}
-            videoId={'3DX7Fp3TmME'}
+            videoId={exerciceData.youtubeId}
             onChangeState={onStateChange}
           />
         </View>

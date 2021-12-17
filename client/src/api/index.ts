@@ -16,6 +16,11 @@ export const getExercices = async () => {
   return res.data.data;
 };
 
+export const getExerice = async (id: number) => {
+  const res = await axios.get(`http://localhost:8000/api/exercices/${id}`);
+  return res.data.data;
+};
+
 interface AddExerciceBody {
   name: string;
   youtubeId: string;
