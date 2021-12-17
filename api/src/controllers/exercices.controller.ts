@@ -51,7 +51,7 @@ export const getExercice = async (req: Request, res: Response) => {
   try {
     const exercice = await prisma.exercice.findUnique({
       where: { id: parseInt(req.params.id) },
-      include: { Workout: true },
+      include: { Workout: true, muscle: true },
     });
     if (!exercice) {
       return res.status(404).json({
