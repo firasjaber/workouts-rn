@@ -1,4 +1,4 @@
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 import { Button, List, ListItem, StyleService } from '@ui-kitten/components';
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, Alert } from 'react-native';
@@ -14,6 +14,7 @@ interface ExerciceProps {
 
 const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
   const [playing, setPlaying] = useState(false);
+  const exerciceId = route.params.id;
 
   const queryClient = useQueryClient();
   const deleteExerciceMutation = useMutation(
@@ -25,7 +26,6 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
     }
   );
 
-  const exerciceId = route.params.id;
   const { data: exerciceData } = useQuery('exercice', () =>
     getExerice(exerciceId)
   );
@@ -63,10 +63,6 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
     if (deleteExerciceMutation.isSuccess) navigation.goBack();
   }, [deleteExerciceMutation.isSuccess]);
 
-  const renderItemAccessory = () => (
-    <Ionicons name='chevron-forward-outline' size={25} />
-  );
-
   const renderItemIcon = () => (
     <Ionicons name={'clipboard-outline'} size={30} />
   );
@@ -81,8 +77,6 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
       title={`${item.name}`}
       style={{ paddingHorizontal: 20 }}
       accessoryLeft={renderItemIcon}
-      accessoryRight={renderItemAccessory}
-      onPress={() => navigation.navigate('Workout')}
     />
   );
   return (

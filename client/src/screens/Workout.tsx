@@ -7,34 +7,34 @@ import { useQuery } from 'react-query';
 import { getWorkout } from '../api';
 import { getMusclesFromWorkout, muscles } from '../helpers';
 
-const renderItemAccessory = () => (
-  <Ionicons name='chevron-forward-outline' size={25} />
-);
-
-const renderItemIcon = () => <Ionicons name={'barbell-outline'} size={30} />;
-
-interface renderItemProps {
-  item: { id: string; name: string; muscleId: number };
-  index: number;
-}
-
-const renderItem: React.FC<renderItemProps> = ({ item }) => (
-  <ListItem
-    title={`${item.name}`}
-    description={muscles[item.muscleId]}
-    accessoryLeft={renderItemIcon}
-    accessoryRight={renderItemAccessory}
-  />
-);
-
 interface WorkoutProps {
   navigation: NavigationProp<any, any>;
   route: any;
 }
 
-const Workout: React.FC<WorkoutProps> = ({ route }) => {
+const Workout: React.FC<WorkoutProps> = ({ route, navigation }) => {
   console.log(route.params.id);
-  const { data } = useQuery('exercice', () => getWorkout(route.params.id));
+  const renderItemAccessory = () => (
+    <Ionicons name='chevron-forward-outline' size={25} />
+  );
+
+  const renderItemIcon = () => <Ionicons name={'barbell-outline'} size={30} />;
+
+  interface renderItemProps {
+    item: { id: string; name: string; muscleId: number };
+    index: number;
+  }
+
+  const renderItem: React.FC<renderItemProps> = ({ item }) => (
+    <ListItem
+      title={`${item.name}`}
+      description={muscles[item.muscleId]}
+      accessoryLeft={renderItemIcon}
+      accessoryRight={renderItemAccessory}
+      onPress={() => navigation.navigate('WorkoutExercice', { id: item.id })}
+    />
+  );
+  const { data } = useQuery('workout', () => getWorkout(route.params.id));
   return (
     <View>
       <View style={styles.header}>
@@ -42,7 +42,7 @@ const Workout: React.FC<WorkoutProps> = ({ route }) => {
         <View style={styles.heading}>
           <Text style={styles.headingOne}>{data?.name}</Text>
           <Text style={styles.headingTwo}>
-            {data && getMusclesFromWorkout(data?.muscles)}
+            {data?.muscles && getMusclesFromWorkout(data?.muscles)}
           </Text>
         </View>
       </View>

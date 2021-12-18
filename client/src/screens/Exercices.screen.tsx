@@ -28,7 +28,7 @@ const ExercicesScreen: React.FC<WorkoutsProps> = ({ route, navigation }) => {
     index: number;
   }
 
-  const renderItem: React.FC<renderItemProps> = ({ item, index }) => (
+  const renderItem: React.FC<renderItemProps> = ({ item }) => (
     <ListItem
       title={`${item.name}`}
       accessoryLeft={renderItemIcon}

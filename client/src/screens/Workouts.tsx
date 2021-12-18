@@ -11,7 +11,7 @@ interface WorkoutsProps {
 }
 
 const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
-  const { data } = useQuery('exercices', getWorkouts);
+  const { data } = useQuery('workouts', getWorkouts);
   const renderItemAccessory = () => (
     <Ionicons name='chevron-forward-outline' size={25} />
   );
@@ -33,7 +33,7 @@ const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
   const renderItem: React.FC<renderItemProps> = ({ item }) => (
     <ListItem
       title={`${item.name}`}
-      description={getMusclesFromWorkout(item.muscles)}
+      description={item.muscles && getMusclesFromWorkout(item.muscles)}
       style={{ paddingHorizontal: 20 }}
       accessoryLeft={renderItemIcon}
       accessoryRight={renderItemAccessory}
