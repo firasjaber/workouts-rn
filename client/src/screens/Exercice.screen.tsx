@@ -63,13 +63,6 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
     if (deleteExerciceMutation.isSuccess) navigation.goBack();
   }, [deleteExerciceMutation.isSuccess]);
 
-  const data: Array<{ title: string; description: string }> = new Array(5).fill(
-    {
-      title: 'Good chest workout',
-      description: 'Chest, Triceps',
-    }
-  );
-
   const renderItemAccessory = () => (
     <Ionicons name='chevron-forward-outline' size={25} />
   );
@@ -83,10 +76,9 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
     index: number;
   }
 
-  const renderItem: React.FC<renderItemProps> = ({ item, index }) => (
+  const renderItem: React.FC<renderItemProps> = ({ item }) => (
     <ListItem
       title={`${item.name}`}
-      //description={`${item.description} ${index + 1}`}
       style={{ paddingHorizontal: 20 }}
       accessoryLeft={renderItemIcon}
       accessoryRight={renderItemAccessory}
