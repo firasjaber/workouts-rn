@@ -6,10 +6,6 @@ import FloatingButton from '../ui/FloatingButton';
 import { useQuery } from 'react-query';
 import { getExercices } from '../api';
 
-const data: Array<{ title: string; description: string }> = new Array(20).fill({
-  title: 'Super good exercice',
-  description: 'Very good exercice',
-});
 interface WorkoutsProps {
   navigation: NavigationProp<any, any>;
   route: any;
