@@ -28,7 +28,7 @@ const MusclesScreen: React.FC<MusclesProps> = ({ navigation }) => {
       accessoryLeft={renderItemIcon}
       style={{ paddingHorizontal: 20 }}
       accessoryRight={renderItemAccessory}
-      onPress={() => navigation.navigate('Exercices')}
+      onPress={() => navigation.navigate('Exercices', { muscleId: item.id })}
     />
   );
   return <List data={data} renderItem={renderItem} />;

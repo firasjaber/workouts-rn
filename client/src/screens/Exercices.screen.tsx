@@ -12,11 +12,15 @@ const data: Array<{ title: string; description: string }> = new Array(20).fill({
 });
 interface WorkoutsProps {
   navigation: NavigationProp<any, any>;
+  route: any;
 }
 
-const ExercicesScreen: React.FC<WorkoutsProps> = ({ navigation }) => {
+const ExercicesScreen: React.FC<WorkoutsProps> = ({ route, navigation }) => {
   const { data } = useQuery('exercices', getExercices);
-
+  const exercices = data.filter(
+    (exercice: { muscleId: number }) =>
+      exercice.muscleId === route.params.muscleId
+  );
   const renderItemAccessory = () => (
     <Ionicons name='chevron-forward-outline' size={25} />
   );
@@ -39,7 +43,7 @@ const ExercicesScreen: React.FC<WorkoutsProps> = ({ navigation }) => {
   );
   return (
     <>
-      <List data={data} renderItem={renderItem} />
+      <List data={exercices} renderItem={renderItem} />
       <FloatingButton navigation={navigation} navigateTo={'Add Exercice'} />
     </>
   );

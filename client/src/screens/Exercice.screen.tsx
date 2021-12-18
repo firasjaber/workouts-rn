@@ -116,7 +116,7 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
           />
         </View>
         <Text style={styles.subtitle}>Workouts : </Text>
-        <List data={exerciceData.Workout} renderItem={renderItem} />
+        <List data={exerciceData?.Workout} renderItem={renderItem} />
       </View>
     </View>
   );
