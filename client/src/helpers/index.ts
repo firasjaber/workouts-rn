@@ -7,3 +7,13 @@ export const getMusclesFromWorkout = (
   );
   return res.slice(0, -2);
 };
+
+export const muscles = [
+  'Chest',
+  'Back',
+  'Shoulders',
+  'Biceps',
+  'Triceps',
+  'Legs',
+  'Core',
+];

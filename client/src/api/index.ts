@@ -39,3 +39,8 @@ export const getWorkouts = async () => {
   const res = await axios.get('http://localhost:8000/api/workouts/all');
   return res.data.data;
 };
+
+export const getWorkout = async (id: string) => {
+  const res = await axios.get(`http://localhost:8000/api/workouts/${id}`);
+  return res.data.data;
+};

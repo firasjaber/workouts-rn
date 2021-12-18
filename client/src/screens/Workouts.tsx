@@ -22,6 +22,7 @@ const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
 
   interface renderItemProps {
     item: {
+      id: number;
       name: string;
       description: string;
       muscles: [{ id: string; name: string }];
@@ -36,7 +37,7 @@ const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
       style={{ paddingHorizontal: 20 }}
       accessoryLeft={renderItemIcon}
       accessoryRight={renderItemAccessory}
-      onPress={() => navigation.navigate('Workout')}
+      onPress={() => navigation.navigate('Workout', { id: item.id })}
     />
   );
   return <List data={data} renderItem={renderItem} />;

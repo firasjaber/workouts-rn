@@ -1,7 +1,11 @@
+import { NavigationProp } from '@react-navigation/native';
 import { List, ListItem, StyleService } from '@ui-kitten/components';
 import React from 'react';
 import { View, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useQuery } from 'react-query';
+import { getWorkout } from '../api';
+import { getMusclesFromWorkout, muscles } from '../helpers';
 
 const data: Array<{ title: string; description: string }> = new Array(20).fill({
   title: 'Good exercice',
@@ -15,32 +19,41 @@ const renderItemAccessory = () => (
 const renderItemIcon = () => <Ionicons name={'barbell-outline'} size={30} />;
 
 interface renderItemProps {
-  item: { title: string; description: string };
+  item: { id: string; name: string; muscleId: number };
   index: number;
 }
 
-const renderItem: React.FC<renderItemProps> = ({ item, index }) => (
+const renderItem: React.FC<renderItemProps> = ({ item }) => (
   <ListItem
-    title={`${item.title} ${index + 1}`}
-    description={`${item.description} ${index + 1}`}
+    title={`${item.name}`}
+    description={muscles[item.muscleId]}
     accessoryLeft={renderItemIcon}
     accessoryRight={renderItemAccessory}
   />
 );
 
-const Workout = () => {
+interface WorkoutProps {
+  navigation: NavigationProp<any, any>;
+  route: any;
+}
+
+const Workout: React.FC<WorkoutProps> = ({ route }) => {
+  console.log(route.params.id);
+  const { data } = useQuery('exercice', () => getWorkout(route.params.id));
   return (
     <View>
       <View style={styles.header}>
         <Ionicons name={'clipboard-outline'} size={50} />
         <View style={styles.heading}>
-          <Text style={styles.headingOne}>Intense Push Workout 1</Text>
-          <Text style={styles.headingTwo}>Chest, Triceps</Text>
+          <Text style={styles.headingOne}>{data?.name}</Text>
+          <Text style={styles.headingTwo}>
+            {data && getMusclesFromWorkout(data?.muscles)}
+          </Text>
         </View>
       </View>
       <List
         style={{ paddingLeft: 20, paddingRight: 20, backgroundColor: 'white' }}
-        data={data}
+        data={data?.exercices}
         renderItem={renderItem}
       />
     </View>
