@@ -34,3 +34,8 @@ interface AddExerciceBody {
 export const addExercice = async (body: AddExerciceBody) => {
   return await axios.post('http://localhost:8000/api/exercices/', body, config);
 };
+
+export const getWorkouts = async () => {
+  const res = await axios.get('http://localhost:8000/api/workouts/all');
+  return res.data.data;
+};

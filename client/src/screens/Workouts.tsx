@@ -2,6 +2,9 @@ import React from 'react';
 import { List, ListItem } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationProp } from '@react-navigation/native';
+import { getWorkouts } from '../api';
+import { useQuery } from 'react-query';
+import { getMusclesFromWorkout } from '../helpers';
 
 const data: Array<{ title: string; description: string }> = new Array(20).fill({
   title: 'Super good workout',
@@ -13,6 +16,7 @@ interface WorkoutsProps {
 }
 
 const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
+  const { data } = useQuery('exercices', getWorkouts);
   const renderItemAccessory = () => (
     <Ionicons name='chevron-forward-outline' size={25} />
   );
@@ -22,14 +26,18 @@ const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
   );
 
   interface renderItemProps {
-    item: { title: string; description: string };
+    item: {
+      name: string;
+      description: string;
+      muscles: [{ id: string; name: string }];
+    };
     index: number;
   }
 
   const renderItem: React.FC<renderItemProps> = ({ item, index }) => (
     <ListItem
-      title={`${item.title} ${index + 1}`}
-      description={`${item.description} ${index + 1}`}
+      title={`${item.name}`}
+      description={getMusclesFromWorkout(item.muscles)}
       style={{ paddingHorizontal: 20 }}
       accessoryLeft={renderItemIcon}
       accessoryRight={renderItemAccessory}
