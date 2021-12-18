@@ -1,11 +1,11 @@
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import { List, ListItem, StyleService } from '@ui-kitten/components';
-import React, { useCallback, useState } from 'react';
+import { Button, List, ListItem, StyleService } from '@ui-kitten/components';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import { useQuery } from 'react-query';
-import { getExerice } from '../api';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { deleteExercice, getExerice } from '../api';
 
 interface ExerciceProps {
   navigation: NavigationProp<any, any>;
@@ -15,7 +15,16 @@ interface ExerciceProps {
 const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
   const [playing, setPlaying] = useState(false);
 
-  console.log(route.params.id);
+  const queryClient = useQueryClient();
+  const deleteExerciceMutation = useMutation(
+    (id: number) => deleteExercice(id),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('exercices');
+      },
+    }
+  );
+
   const exerciceId = route.params.id;
   const { data: exerciceData } = useQuery('exercice', () =>
     getExerice(exerciceId)
@@ -26,6 +35,33 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
       Alert.alert('video has finished playing!');
     }
   }, []);
+
+  const handleDelete = () => {
+    Alert.alert(
+      'Delete Exercice',
+      'Are you sure about deleting this exercice',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            deleteExerciceMutation.mutate(exerciceId);
+          },
+          style: 'destructive',
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (deleteExerciceMutation.isSuccess) navigation.goBack();
+  }, [deleteExerciceMutation.isSuccess]);
 
   const data: Array<{ title: string; description: string }> = new Array(5).fill(
     {
@@ -60,11 +96,21 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
       <View style={styles.header}>
-        <Ionicons name={'barbell-outline'} size={50} />
-        <View style={styles.heading}>
-          <Text style={styles.headingOne}>{exerciceData?.name}</Text>
-          <Text style={styles.headingTwo}>{exerciceData?.muscle?.name}</Text>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Ionicons name={'barbell-outline'} size={45} />
+          <View style={styles.heading}>
+            <Text style={styles.headingOne}>{exerciceData?.name}</Text>
+            <Text style={styles.headingTwo}>{exerciceData?.muscle?.name}</Text>
+          </View>
         </View>
+        <Button
+          size='small'
+          onPress={handleDelete}
+          status='danger'
+          appearance='outline'
+        >
+          Delete
+        </Button>
       </View>
 
       <View>
@@ -86,11 +132,12 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
 
 const styles = StyleService.create({
   header: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
     width: '100%',
-    height: 100,
     borderBottomColor: 'grey',
     backgroundColor: 'whitesmoke',
     borderBottomWidth: 0.5,

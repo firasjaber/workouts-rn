@@ -21,6 +21,10 @@ export const getExerice = async (id: number) => {
   return res.data.data;
 };
 
+export const deleteExercice = async (id: number) => {
+  return await axios.delete(`http://localhost:8000/api/exercices/${id}`);
+};
+
 interface AddExerciceBody {
   name: string;
   youtubeId: string;
