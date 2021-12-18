@@ -7,11 +7,6 @@ import { useQuery } from 'react-query';
 import { getWorkout } from '../api';
 import { getMusclesFromWorkout, muscles } from '../helpers';
 
-const data: Array<{ title: string; description: string }> = new Array(20).fill({
-  title: 'Good exercice',
-  description: 'Chest, Triceps',
-});
-
 const renderItemAccessory = () => (
   <Ionicons name='chevron-forward-outline' size={25} />
 );
