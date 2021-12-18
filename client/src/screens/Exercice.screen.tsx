@@ -79,14 +79,14 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
   );
 
   interface renderItemProps {
-    item: { title: string; description: string };
+    item: { id: string; name: string };
     index: number;
   }
 
   const renderItem: React.FC<renderItemProps> = ({ item, index }) => (
     <ListItem
-      title={`${item.title} ${index + 1}`}
-      description={`${item.description} ${index + 1}`}
+      title={`${item.name}`}
+      //description={`${item.description} ${index + 1}`}
       style={{ paddingHorizontal: 20 }}
       accessoryLeft={renderItemIcon}
       accessoryRight={renderItemAccessory}
@@ -124,7 +124,7 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
           />
         </View>
         <Text style={styles.subtitle}>Workouts : </Text>
-        <List data={data} renderItem={renderItem} />
+        <List data={exerciceData.Workout} renderItem={renderItem} />
       </View>
     </View>
   );
@@ -137,6 +137,8 @@ const styles = StyleService.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
+    maxHeight: 120,
+    heigth: 50,
     width: '100%',
     borderBottomColor: 'grey',
     backgroundColor: 'whitesmoke',
