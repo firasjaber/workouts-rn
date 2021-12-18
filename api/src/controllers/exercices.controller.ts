@@ -60,5 +60,7 @@ export const getExercice = async (req: Request, res: Response) => {
       });
     }
     return res.status(200).json({ status: 'success', data: exercice });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'internal error' });
+  }
 };
