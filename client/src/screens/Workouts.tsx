@@ -6,11 +6,6 @@ import { getWorkouts } from '../api';
 import { useQuery } from 'react-query';
 import { getMusclesFromWorkout } from '../helpers';
 
-const data: Array<{ title: string; description: string }> = new Array(20).fill({
-  title: 'Super good workout',
-  description: 'Very good workout',
-});
-
 interface WorkoutsProps {
   navigation: NavigationProp<any, any>;
 }
@@ -34,7 +29,7 @@ const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
     index: number;
   }
 
-  const renderItem: React.FC<renderItemProps> = ({ item, index }) => (
+  const renderItem: React.FC<renderItemProps> = ({ item }) => (
     <ListItem
       title={`${item.name}`}
       description={getMusclesFromWorkout(item.muscles)}
