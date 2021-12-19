@@ -6,11 +6,13 @@ import ExerciceScreen from '../screens/Exercice.screen';
 import Workout from '../screens/Workout';
 import Workouts from '../screens/Workouts';
 import useAuthStore from '../store/auth';
+import useWorkoutStore from '../store/workout';
 
 const Stack = createNativeStackNavigator();
 
 const WorkoutsStack = () => {
   const signOut = useAuthStore((state) => state.signOut);
+  const exercices = useWorkoutStore((state) => state.exercices);
   return (
     <Stack.Navigator
       initialRouteName='AllWorkouts'
@@ -27,7 +29,15 @@ const WorkoutsStack = () => {
         component={AddWorkout}
         options={{
           title: 'New Workout',
-          headerRight: () => <Button title='Create' />,
+          headerRight: () => (
+            <Button
+              title='Create'
+              disabled={exercices.length === 0 ? true : false}
+              onPress={() => {
+                console.log(exercices);
+              }}
+            />
+          ),
         }}
       />
     </Stack.Navigator>

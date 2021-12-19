@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useQuery } from 'react-query';
 import { getExercices } from '../api';
+import useWorkoutStore from '../store/workout';
 
 interface Props {
   navigation: NavigationProp<any, any>;
@@ -11,7 +12,10 @@ interface Props {
 
 const AddWorkout: React.FC<Props> = () => {
   const { data } = useQuery('exercices', getExercices);
-  const [selectedExercices, setSelectedExecices] = useState({});
+  const [selectedExercices, setSelectedExecices] = useState<
+    Record<string, boolean>
+  >({});
+  const setExercices = useWorkoutStore((state) => state.setExercices);
   //TODO : Clean up
   useEffect(() => {
     const alt: any = {};
@@ -51,6 +55,12 @@ const AddWorkout: React.FC<Props> = () => {
         onPress={() => {
           alt[item.id] = !alt[item.id];
           setSelectedExecices(alt);
+          const r: number[] = [];
+          Object.keys(selectedExercices).forEach((element: string) => {
+            const x = selectedExercices[element];
+            if (x) r.push(parseInt(element));
+          });
+          setExercices(r);
         }}
       />
     );
