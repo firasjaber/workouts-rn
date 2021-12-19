@@ -27,6 +27,9 @@ const AddWorkout: React.FC<Props> = () => {
       setSelectedExecices(alt);
     }
   }, [data]);
+  useEffect(() => {
+    setExercices([]);
+  }, []);
 
   interface renderItemProps {
     item: { id: number; name: string; youtubeId: string; musclesId: number };

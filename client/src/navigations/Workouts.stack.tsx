@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Button } from 'react-native';
+import { Alert, Button } from 'react-native';
 import AddWorkout from '../screens/AddWorkout.screen';
 import ExerciceScreen from '../screens/Exercice.screen';
 import Workout from '../screens/Workout';
@@ -35,6 +35,14 @@ const WorkoutsStack = () => {
               disabled={exercices.length === 0 ? true : false}
               onPress={() => {
                 console.log(exercices);
+                Alert.prompt('New workout', 'Enter workout name', [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  { text: 'OK', onPress: (value) => console.log(value) },
+                ]);
               }}
             />
           ),
