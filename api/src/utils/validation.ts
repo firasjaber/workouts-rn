@@ -29,6 +29,13 @@ export function createValidationFor(route: string) {
         check('youtubeId').notEmpty(),
         check('muscleId').notEmpty(),
       ];
+
+    case 'createWorkout':
+      return [
+        check('name').notEmpty(),
+        check('exercices').notEmpty().isArray(),
+        check('muscles').notEmpty().isArray(),
+      ];
     default:
       return [];
   }

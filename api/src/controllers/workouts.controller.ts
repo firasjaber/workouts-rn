@@ -62,7 +62,7 @@ export const createWorkout = async (req: Request, res: Response) => {
     });
     res
       .status(201)
-      .json({ succes: false, message: 'Workout created succesfully' });
+      .json({ succes: true, message: 'Workout created succesfully' });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'internal error' });
   }
