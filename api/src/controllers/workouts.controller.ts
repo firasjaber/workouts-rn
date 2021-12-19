@@ -55,7 +55,7 @@ export const createWorkout = async (req: Request, res: Response) => {
     await prisma.workout.create({
       data: {
         name,
-        User: { connect: { id: userId } },
+        User: { connect: { id: res.locals.user.id } },
         muscles: { connect: musclesFormatted },
         exercices: { connect: exercicesFormatted },
       },

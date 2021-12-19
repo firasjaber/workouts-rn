@@ -4,10 +4,11 @@ import {
   getAllWorkouts,
   getWorkout,
 } from '../controllers/workouts.controller';
+import auth from '../middlewares/auth';
 const router = express.Router();
 
 router.get('/all', getAllWorkouts);
 router.get('/:id', getWorkout);
-router.post('/', createWorkout);
+router.post('/', auth, createWorkout);
 
 export = router;
