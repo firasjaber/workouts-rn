@@ -29,3 +29,41 @@ export const getWorkout = async (req: Request, res: Response) => {
     return res.status(500).json({ success: false, message: 'internal error' });
   }
 };
+
+interface createWorkoutBody {
+  name: string;
+  muscles: number[];
+  exercices: number[];
+  userId: number;
+}
+
+export const createWorkout = async (req: Request, res: Response) => {
+  try {
+    const { name, muscles, exercices, userId }: createWorkoutBody = req.body;
+    const musclesFormatted: Array<{ id: number }> = muscles.map(
+      (id: number) => {
+        const formatted: { id: number } = { id };
+        return formatted;
+      }
+    );
+    const exercicesFormatted: Array<{ id: number }> = exercices.map(
+      (id: number) => {
+        const formatted: { id: number } = { id };
+        return formatted;
+      }
+    );
+    await prisma.workout.create({
+      data: {
+        name,
+        User: { connect: { id: userId } },
+        muscles: { connect: musclesFormatted },
+        exercices: { connect: exercicesFormatted },
+      },
+    });
+    res
+      .status(201)
+      .json({ succes: false, message: 'Workout created succesfully' });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'internal error' });
+  }
+};
