@@ -5,6 +5,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { getWorkouts } from '../api';
 import { useQuery } from 'react-query';
 import { getMusclesFromWorkout } from '../helpers';
+import FloatingButton from '../ui/FloatingButton';
 
 interface WorkoutsProps {
   navigation: NavigationProp<any, any>;
@@ -40,7 +41,12 @@ const Workouts: React.FC<WorkoutsProps> = ({ navigation }) => {
       onPress={() => navigation.navigate('Workout', { id: item.id })}
     />
   );
-  return <List data={data} renderItem={renderItem} />;
+  return (
+    <>
+      <List data={data} renderItem={renderItem} />
+      <FloatingButton navigation={navigation} navigateTo={'AddWorkout'} />
+    </>
+  );
 };
 
 export default Workouts;

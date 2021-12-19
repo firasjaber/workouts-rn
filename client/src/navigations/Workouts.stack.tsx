@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { Button } from 'react-native';
+import AddWorkout from '../screens/AddWorkout.screen';
 import ExerciceScreen from '../screens/Exercice.screen';
 import Workout from '../screens/Workout';
 import Workouts from '../screens/Workouts';
@@ -21,6 +22,14 @@ const WorkoutsStack = () => {
       <Stack.Screen name='AllWorkouts' component={Workouts} />
       <Stack.Screen name='Workout' component={Workout} />
       <Stack.Screen name='WorkoutExercice' component={ExerciceScreen} />
+      <Stack.Screen
+        name='AddWorkout'
+        component={AddWorkout}
+        options={{
+          title: 'New Workout',
+          headerRight: () => <Button title='Create' />,
+        }}
+      />
     </Stack.Navigator>
   );
 };
