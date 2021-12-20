@@ -44,3 +44,18 @@ export const getWorkout = async (id: string) => {
   const res = await axios.get(`http://localhost:8000/api/workouts/${id}`);
   return res.data.data;
 };
+export interface createWorkoutBody {
+  name: string;
+  exercices: number[];
+  muscles: number[];
+}
+
+export const addWorkout = async (body: createWorkoutBody, token: string) => {
+  const config = {
+    headers: {
+      'content-type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+  };
+  return await axios.post('http://localhost:8000/api/workouts/', body, config);
+};

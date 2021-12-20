@@ -19,9 +19,12 @@ const AddWorkout: React.FC<Props> = () => {
   //TODO : Clean up
   useEffect(() => {
     const alt: any = {};
+    const musclesAlt: Record<string, boolean> = {};
     if (data) {
       data.map((exercice: any) => {
         const id = exercice.id;
+        const muscleId = exercice.muscleId;
+        musclesAlt[muscleId] = false;
         alt[id] = false;
       });
       setSelectedExecices(alt);

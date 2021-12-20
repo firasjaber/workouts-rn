@@ -10,7 +10,6 @@ export const registerUser = async (
 ) => {
   let { email, firstName, lastName, password } = req.body;
   email = email.toLowerCase();
-  console.log(email);
   try {
     const user = await prisma.user.findUnique({ where: { email: email } });
     if (user) {
