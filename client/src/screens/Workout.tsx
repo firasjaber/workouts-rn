@@ -1,10 +1,11 @@
 import { NavigationProp } from '@react-navigation/native';
-import { List, ListItem, StyleService } from '@ui-kitten/components';
-import React from 'react';
-import { View, Text } from 'react-native';
+import { List, ListItem, StyleService, Button } from '@ui-kitten/components';
+import React, { useEffect } from 'react';
+import { View, Text, Alert } from 'react-native';
+import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useQuery } from 'react-query';
-import { getWorkout } from '../api';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { deleteWorkout, getWorkout } from '../api';
 import { getMusclesFromWorkout, muscles } from '../helpers';
 
 interface WorkoutProps {
@@ -35,16 +36,64 @@ const Workout: React.FC<WorkoutProps> = ({ route, navigation }) => {
     />
   );
   const { data } = useQuery('workout', () => getWorkout(route.params.id));
+
+  const queryClient = useQueryClient();
+  const deleteWorkoutMutation = useMutation((id: number) => deleteWorkout(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('workouts');
+    },
+  });
+
+  const handleDelete = () => {
+    Alert.alert(
+      'Delete Workout',
+      'Are you sure about deleting this workout',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            deleteWorkoutMutation.mutate(route.params.id);
+          },
+          style: 'destructive',
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (deleteWorkoutMutation.isSuccess) {
+      Toast.show({ type: 'success', text1: 'Workout Deleted Succesfully' });
+      navigation.goBack();
+    }
+  }, [deleteWorkoutMutation.isSuccess]);
+
   return (
     <View>
       <View style={styles.header}>
-        <Ionicons name={'clipboard-outline'} size={50} />
-        <View style={styles.heading}>
-          <Text style={styles.headingOne}>{data?.name}</Text>
-          <Text style={styles.headingTwo}>
-            {data?.muscles && getMusclesFromWorkout(data?.muscles)}
-          </Text>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Ionicons name={'clipboard-outline'} size={50} />
+          <View style={styles.heading}>
+            <Text style={styles.headingOne}>{data?.name}</Text>
+            <Text style={styles.headingTwo}>
+              {data?.muscles && getMusclesFromWorkout(data?.muscles)}
+            </Text>
+          </View>
         </View>
+        <Button
+          size='small'
+          onPress={handleDelete}
+          status='danger'
+          appearance='outline'
+        >
+          Delete
+        </Button>
       </View>
       <List
         style={{ paddingLeft: 20, paddingRight: 20, backgroundColor: 'white' }}
@@ -59,6 +108,7 @@ const styles = StyleService.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
     width: '100%',
     height: 100,

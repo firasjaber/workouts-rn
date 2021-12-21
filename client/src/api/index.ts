@@ -59,3 +59,7 @@ export const addWorkout = async (body: createWorkoutBody, token: string) => {
   };
   return await axios.post('http://localhost:8000/api/workouts/', body, config);
 };
+
+export const deleteWorkout = async (id: number) => {
+  return await axios.delete(`http://localhost:8000/api/workouts/${id}`);
+};
