@@ -2,6 +2,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { Button, List, ListItem, StyleService } from '@ui-kitten/components';
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, Alert } from 'react-native';
+import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -60,7 +61,10 @@ const ExerciceScreen: React.FC<ExerciceProps> = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    if (deleteExerciceMutation.isSuccess) navigation.goBack();
+    if (deleteExerciceMutation.isSuccess) {
+      Toast.show({ type: 'success', text1: 'Exercice Deleted Succesfully' });
+      navigation.goBack();
+    }
   }, [deleteExerciceMutation.isSuccess]);
 
   const renderItemIcon = () => (

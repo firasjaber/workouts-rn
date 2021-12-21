@@ -2,6 +2,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import { Alert, Button } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addWorkout, createWorkoutBody, getExercices } from '../api';
 import AddWorkout from '../screens/AddWorkout.screen';
@@ -33,7 +34,13 @@ const WorkoutsStack: React.FC<WorkoutsStackProps> = ({ navigation }) => {
   );
 
   useEffect(() => {
-    if (addWorkoutMutation.isSuccess) navigation.goBack();
+    if (addWorkoutMutation.isSuccess) {
+      Toast.show({
+        type: 'success',
+        text1: 'Workout Created Succesfully',
+      });
+      navigation.goBack();
+    }
   }, [addWorkoutMutation.isSuccess]);
   const { data } = useQuery('exercices', getExercices);
   // formatting the data to match the api.

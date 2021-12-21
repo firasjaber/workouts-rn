@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import Toast from 'react-native-toast-message';
 import { addExercice, getMuscles } from '../api';
 
 interface AddExerciceBody {
@@ -45,7 +46,10 @@ const AddExercice: React.FC<AddExerciceProps> = ({ navigation }) => {
     addExerciceMutation.mutate(body);
   };
   useEffect(() => {
-    if (addExerciceMutation.isSuccess) navigation.goBack();
+    if (addExerciceMutation.isSuccess) {
+      Toast.show({ type: 'success', text1: 'Exercice Added Succesfully' });
+      navigation.goBack();
+    }
   }, [addExerciceMutation.isSuccess]);
   const { data } = useQuery('muscles', getMuscles);
   return (
