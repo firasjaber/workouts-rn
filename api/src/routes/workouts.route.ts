@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   createWorkout,
+  deleteWorkout,
   getAllWorkouts,
   getWorkout,
 } from '../controllers/workouts.controller';
@@ -20,5 +21,6 @@ router.post(
   checkValidationResult,
   createWorkout
 );
+router.delete('/:id', deleteWorkout);
 
 export = router;

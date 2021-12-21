@@ -67,3 +67,29 @@ export const createWorkout = async (req: Request, res: Response) => {
     return res.status(500).json({ success: false, message: 'internal error' });
   }
 };
+
+export const deleteWorkout = async (req: Request, res: Response) => {
+  try {
+    const workout = await prisma.workout.findUnique({
+      where: { id: parseInt(req.params.id) },
+    });
+
+    if (!workout) {
+      return res.status(400).json({
+        success: false,
+        message: `Workout with id = ${req.params.id} not found`,
+      });
+    }
+    await prisma.workout.delete({
+      where: { id: parseInt(req.params.id) },
+    });
+    return res
+      .status(201)
+      .json({ success: true, message: 'Workout deleted succefully' });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+      error,
+    });
+  }
+};
