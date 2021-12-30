@@ -18,9 +18,9 @@ Workout management and tracking mobile app linked to REST API backend ( College 
 
 ### Some Screencasts :
 
-- Exercices CRUD :  
-  ![exercices_gif](https://media.giphy.com/media/KoPBllgfHmSP99trzg/giphy.gif)
 - Auth :  
   ![auth_gif](https://media.giphy.com/media/j8s4J4DBa5xaf28ZSd/giphy.gif)
 - Workouts CRUD :  
   ![workouts_gif](https://media.giphy.com/media/KVJeRQ9f7YaIkQOtJw/giphy.gif)
+- Exercices CRUD :  
+  ![exercices_gif](https://media.giphy.com/media/KoPBllgfHmSP99trzg/giphy.gif)
